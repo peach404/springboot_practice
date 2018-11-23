@@ -1,17 +1,19 @@
 package me.soyeon.springpractice;
 
+import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 
-public class SampleListener implements ApplicationListener<ApplicationStartingEvent> {
+@Component //빈등록
+public class SampleListener implements ApplicationListener<ApplicationStartedEvent> {
 
-
+    //ApplicationStartedEvent는 빈등록하고 사용하면 된다.
     @Override
-    public void onApplicationEvent(ApplicationStartingEvent applicationStartingEvent) {
-        System.out.println("=======================");
-        System.out.println("Application is starting");
-        System.out.println("=======================");
+    public void onApplicationEvent(ApplicationStartedEvent applicationStartedEvent) {
+        System.out.println("==============================");
+        System.out.println("Started");
+        System.out.println("==============================");
     }
 }
