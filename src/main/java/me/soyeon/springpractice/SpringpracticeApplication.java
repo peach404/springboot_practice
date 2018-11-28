@@ -10,7 +10,6 @@ public class SpringpracticeApplication {
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(SpringpracticeApplication.class);
-        app.setWebApplicationType(WebApplicationType.NONE);
         app.run(args);
 
     }
