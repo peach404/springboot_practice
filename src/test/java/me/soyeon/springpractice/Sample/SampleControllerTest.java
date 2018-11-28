@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
@@ -24,8 +26,10 @@ import static org.mockito.Mockito.when;
 public class SampleControllerTest {
 
 
+    //webflux 의존성 추가해야한다.
+
     @Autowired
-    TestRestTemplate testRestTemplate;
+    WebTestClient webTestClient;
 
     //Test 크기가 Service 단 까지 가면 너무 크기 때문에 원본이 아니라 mockSampleService로 빈을 교체해서 테스트하면 훨씬 가벼워진다.
     @MockBean
@@ -36,9 +40,9 @@ public class SampleControllerTest {
     public void hello() throws Exception{
         when(mockSampleService.getName()).thenReturn("soyeon");
 
-        String result = testRestTemplate.getForObject("/hello",String.class);
-        assertThat(result).isEqualTo("hellosoyeon");
-
+        webTestClient.get().uri("/hello").exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("hellosoyeon");
 
     }
 }
