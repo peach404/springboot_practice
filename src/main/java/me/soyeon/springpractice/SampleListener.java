@@ -1,17 +1,27 @@
 package me.soyeon.springpractice;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 
 @Component //빈등록
-public class SampleListener {
+public class SampleListener implements ApplicationRunner {
 
-    public SampleListener(ApplicationArguments arguments){
-        //Vm option은 안읽힘
-        System.out.println("foo: " + arguments.containsOption("foo"));
-        //Program arguments는 읽힘
-        System.out.println("bar: " + arguments.containsOption("bar"));
+//    @Value("${soyeon.name}") //properties 값을 출력
+//    private String name;
+
+    @Autowired
+    Soyeonproperties soyeonproperties;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception{
+        System.out.println("======================");
+        System.out.println(soyeonproperties.getName());
+        System.out.println(soyeonproperties.getAge());
+        System.out.println(soyeonproperties.getPart());
+        System.out.println("======================");
     }
 
 }
