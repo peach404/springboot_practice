@@ -1,49 +1,44 @@
 package me.soyeon.springpractice.Sample;
 
 
+import me.soyeon.springpractice.sample.SampleController;
+import me.soyeon.springpractice.sample.SampleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.when;
 
-//내장 톰캣 구동 안하는 Mock
+
+//내장 톰캣 구동 하는 RANDOM_PORT
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SampleControllerTest {
 
+
     @Autowired
-    MockMvc mockMvc;
+    TestRestTemplate testRestTemplate;
+
+    //Test 크기가 Service 단 까지 가면 너무 크기 때문에 원본이 아니라 mockSampleService로 빈을 교체해서 테스트하면 훨씬 가벼워진다.
+    @MockBean
+    SampleService mockSampleService;
+
 
     @Test
     public void hello() throws Exception{
-        mockMvc.perform(get("/hello"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("hellosoyeon"))
-                .andDo(print());
+        when(mockSampleService.getName()).thenReturn("soyeon");
+
+        String result = testRestTemplate.getForObject("/hello",String.class);
+        assertThat(result).isEqualTo("hellosoyeon");
+
 
     }
 }
-
-// 결과값
-
-//MockHttpServletResponse:
-//        Status = 200
-//        Error message = null
-//        Headers = {Content-Type=[text/plain;charset=UTF-8], Content-Length=[11]}
-//        Content type = text/plain;charset=UTF-8
-//        Body = hellosoyeon
-//        Forwarded URL = null
-//        Redirected URL = null
-//        Cookies = []
