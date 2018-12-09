@@ -39,3 +39,9 @@ Logback에서 찍는것인데 그 전단계에 (로깅 퍼사드)SLF4j 혹은 Co
 
 WebTestClient ->비동기
  
+ ### CORS
+ 
+ Origin 이란 ? http / https + 도메인(localhost) + 포트
+ Same origin Policy - 문서나 스크립트가 다른 출처의 리소스와 통신하는 것을 제한하는 중요한 보안 방식
+ Cross-Origin Resource Sharing - 오늘날 많은 웹 페이지들은 CSS 스타일시트, 이미지, 그리고 스크립트와 같은 리소스들을 각각의 출처로부터 읽어오는데
+ Same origin Policy 때문에 이것이 제한되지만 스프링에서 우회할 수 있게  @CrossOrigin()을 제공한다.

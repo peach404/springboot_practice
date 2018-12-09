@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
-//스프링 MVC 확장
+//스프링 관련 설정파일 추가
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
